@@ -2,6 +2,9 @@
   
 # Favilla
 
+</div>
+
+---
 
 ## Introduction
 
