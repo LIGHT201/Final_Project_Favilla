@@ -1,0 +1,12 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Django specific file
+db.sqlite3
+
+# IDE specific files
+.vscode/
+.idea/
