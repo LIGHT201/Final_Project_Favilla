@@ -93,16 +93,37 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
     fulfillment = models.CharField(max_length=20, choices=FULFILLMENT_CHOICES, default='PICKUP')
+    delivery_address = models.TextField(blank=True)
     special_instructions = models.TextField(blank=True)
+    tax_rate = models.DecimalField(max_digits=5, decimal_places=4, default=Decimal("0.02"))
+    tax_amount = models.DecimalField(max_digits=8, decimal_places=2, default=Decimal("0.00"))
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def subtotal(self):
+        return sum(
+            (item.unit_price * item.quantity for item in self.items.all()),
+            Decimal("0.00"),
+        )
+
+    @property
+    def total(self):
+        return self.subtotal + self.tax_amount
+
+    @property
+    def tax_rate_percent(self):
+        return self.tax_rate * 100
 
     def __str__(self):
         return f"Order #{self.id} - {self.customer.user.username}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.PROTECT)
+    item_name = models.CharField(max_length=100)
+    size = models.CharField(max_length=20, blank=True)
+    unit_price = models.DecimalField(max_digits=6, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"{self.quantity}x {self.menu_item.name}"
+        return f"{self.quantity}x {self.item_name}"

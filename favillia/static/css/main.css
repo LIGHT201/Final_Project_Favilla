@@ -46,6 +46,38 @@ nav a:hover {
     text-decoration: underline;
 }
 
+.messages {
+    max-width: 900px;
+    margin: 1rem auto 0;
+    padding: 0 1.5rem;
+    color: var(--accent-hover);
+}
+
+.messages p {
+    margin: 0;
+}
+
+.nav-form {
+    display: flex;
+    align-items: center;
+}
+
+.nav-button {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.85rem;
+}
+
+.nav-button:hover {
+    background: transparent;
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
 main {
     max-width: 900px;
     margin: 2rem auto;
@@ -74,8 +106,203 @@ h1, h2 {
     border-radius: 8px;
 }
 
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+}
+
+.menu-item {
+    margin-bottom: 1rem;
+}
+
+.add-to-cart-form,
+.cart-item-controls form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+select,
+button {
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 0.55rem 0.8rem;
+    font: inherit;
+}
+
+button {
+    background-color: var(--accent);
+    color: #121212;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+button:hover {
+    background-color: var(--accent-hover);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cart-item h2,
+.cart-item p {
+    margin: 0.25rem 0;
+}
+
+.line-total {
+    text-align: right;
+}
+
+.secondary-button {
+    background: transparent;
+    color: var(--accent);
+}
+
+.cart-summary {
+    max-width: 22rem;
+    margin: 1.5rem 0 0 auto;
+}
+
+.cart-summary p {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.grand-total {
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.button-link {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 0.55rem 0.8rem;
+    background: var(--accent);
+    color: #121212;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.button-link:hover {
+    background: var(--accent-hover);
+}
+
+.form-card,
+.checkout-details,
+.checkout-summary {
+    max-width: 38rem;
+}
+
+.form-card label,
+.checkout-details label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: 600;
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select,
+.checkout-details textarea,
+.checkout-details select,
+.staff-menu-form input,
+.staff-menu-form textarea,
+.staff-menu-form select {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.55rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font: inherit;
+}
+
+.form-card ul,
+.helptext {
+    color: #bdbdbd;
+    font-size: 0.9rem;
+}
+
+.form-error,
+.errorlist {
+    color: #ff9a8b;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1rem;
+    align-items: start;
+}
+
+.checkout-summary {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.checkout-summary > p,
+.order-total p {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.order-card {
+    margin-bottom: 1rem;
+}
+
+.order-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.order-heading h2 {
+    margin: 0;
+}
+
+.status-badge {
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
+    background: #393127;
+    color: var(--accent-hover);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
 @media (max-width: 700px) {
     .feature {
         grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .line-total {
+        text-align: left;
+    }
+
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
     }
 }

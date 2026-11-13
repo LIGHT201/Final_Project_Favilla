@@ -4,5 +4,40 @@
     
 {% block content %}
     <h1>Cart</h1>
-    <p>Coming soon...</p>
+    {% if cart_items %}
+        <div class="cart-items">
+            {% for line in cart_items %}
+                <article class="cart-item card">
+                    <div>
+                        <h2>{{ line.item.name }}</h2>
+                        {% if line.size_label %}<p>{{ line.size_label }}</p>{% endif %}
+                        <p>${{ line.unit_price|floatformat:2 }} each</p>
+                    </div>
+                    <div class="cart-item-controls">
+                        <form method="post" action="{% url 'cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="key" value="{{ line.key }}">
+                            <button type="submit" name="action" value="decrease" aria-label="Decrease quantity of {{ line.item.name }}">−</button>
+                            <span>Qty: {{ line.quantity }}</span>
+                            <button type="submit" name="action" value="increase" aria-label="Increase quantity of {{ line.item.name }}">+</button>
+                        </form>
+                        <p class="line-total">Line total: ${{ line.line_total|floatformat:2 }}</p>
+                        <form method="post" action="{% url 'cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="key" value="{{ line.key }}">
+                            <button type="submit" name="action" value="remove" class="secondary-button">Remove</button>
+                        </form>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        <section class="cart-summary card" aria-label="Order totals">
+            <p>Subtotal <span>${{ subtotal|floatformat:2 }}</span></p>
+            <p>Tax ({{ tax_rate_percent|floatformat:0 }}%) <span>${{ tax|floatformat:2 }}</span></p>
+            <p class="grand-total">Total <span>${{ total|floatformat:2 }}</span></p>
+            <a class="button-link" href="{% url 'checkout' %}">Continue to checkout</a>
+        </section>
+    {% else %}
+        <p>Your cart is empty. <a href="{% url 'menu' %}">Browse the menu</a> to add something.</p>
+    {% endif %}
 {% endblock %}

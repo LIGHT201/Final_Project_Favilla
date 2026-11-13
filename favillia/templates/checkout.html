@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout | Favilla{% endblock %}
+
+{% block content %}
+    <h1>Checkout</h1>
+    {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+    <form method="post" class="checkout-layout">
+        {% csrf_token %}
+        <section class="card checkout-details">
+            <h2>How would you like your order?</h2>
+            <label for="fulfillment">Fulfillment</label>
+            <select id="fulfillment" name="fulfillment">
+                <option value="PICKUP" {% if fulfillment == 'PICKUP' %}selected{% endif %}>Pickup</option>
+                <option value="DELIVERY" {% if fulfillment == 'DELIVERY' %}selected{% endif %}>Delivery</option>
+            </select>
+            <label for="delivery-address">Delivery address</label>
+            <textarea id="delivery-address" name="delivery_address" rows="3">{{ delivery_address }}</textarea>
+            <label for="special-instructions">Special instructions (optional)</label>
+            <textarea id="special-instructions" name="special_instructions" rows="3">{{ special_instructions }}</textarea>
+        </section>
+        <section class="card checkout-summary" aria-label="Order summary">
+            <h2>Order summary</h2>
+            {% for line in cart_items %}
+                <p>
+                    <span>{{ line.quantity }} × {{ line.item.name }}{% if line.size_label %} ({{ line.size_label }}){% endif %}</span>
+                    <span>${{ line.line_total|floatformat:2 }}</span>
+                </p>
+            {% endfor %}
+            <p>Subtotal <span>${{ subtotal|floatformat:2 }}</span></p>
+            <p>Tax ({{ tax_rate_percent|floatformat:0 }}%) <span>${{ tax|floatformat:2 }}</span></p>
+            <p class="grand-total">Total <span>${{ total|floatformat:2 }}</span></p>
+            <button type="submit">Place order</button>
+        </section>
+    </form>
+{% endblock %}

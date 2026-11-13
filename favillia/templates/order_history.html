@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}My Orders | Favilla{% endblock %}
+
+{% block content %}
+    <h1>My Orders</h1>
+    {% for order in orders %}
+        <article class="order-card card">
+            <div class="order-heading">
+                <h2>Order #{{ order.pk }}</h2>
+                <span class="status-badge">{{ order.get_status_display }}</span>
+            </div>
+            <p>{{ order.created_at|date:"M j, Y g:i A" }} · {{ order.get_fulfillment_display }}</p>
+            {% if order.delivery_address %}<p>{{ order.delivery_address }}</p>{% endif %}
+            <ul>
+                {% for item in order.items.all %}
+                    <li>{{ item.quantity }} × {{ item.item_name }}{% if item.size %} ({{ item.size }}){% endif %} — ${{ item.unit_price|floatformat:2 }} each</li>
+                {% endfor %}
+            </ul>
+            <div class="order-total">
+                <p>Subtotal <span>${{ order.subtotal|floatformat:2 }}</span></p>
+                <p>Tax ({{ order.tax_rate_percent|floatformat:0 }}%) <span>${{ order.tax_amount|floatformat:2 }}</span></p>
+                <p class="grand-total">Total <span>${{ order.total|floatformat:2 }}</span></p>
+            </div>
+            {% if order.special_instructions %}<p><strong>Instructions:</strong> {{ order.special_instructions }}</p>{% endif %}
+        </article>
+    {% empty %}
+        <p>You have not placed any orders yet. <a href="{% url 'menu' %}">Browse the menu</a>.</p>
+    {% endfor %}
+{% endblock %}

@@ -3,6 +3,40 @@
 {% block title %}Staff Queue | Favilla{% endblock %}
 
 {% block content %}
-    <h1>Staff Queue</h1>
-    <p>Coming soon...</p>
+    <h1>Staff Order Queue</h1>
+    {% for order in orders %}
+        <article class="order-card card">
+            <div class="order-heading">
+                <h2>Order #{{ order.pk }}</h2>
+                <span class="status-badge">{{ order.get_status_display }}</span>
+            </div>
+            <p>{{ order.created_at|date:"M j, Y g:i A" }} · {{ order.customer.user.username }} · {{ order.get_fulfillment_display }}</p>
+            {% if order.delivery_address %}<p>Delivery to: {{ order.delivery_address }}</p>{% endif %}
+            <ul>
+                {% for item in order.items.all %}
+                    <li>{{ item.quantity }} × {{ item.item_name }}{% if item.size %} ({{ item.size }}){% endif %} — ${{ item.unit_price|floatformat:2 }} each</li>
+                {% endfor %}
+            </ul>
+            {% if order.special_instructions %}<p><strong>Instructions:</strong> {{ order.special_instructions }}</p>{% endif %}
+            <p class="grand-total">Total: ${{ order.total|floatformat:2 }}</p>
+            {% if order.status == 'PENDING' %}
+                <form method="post" action="{% url 'update_order_status' order.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" name="status" value="PREPPING">Start preparing</button>
+                </form>
+            {% elif order.status == 'PREPPING' %}
+                <form method="post" action="{% url 'update_order_status' order.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" name="status" value="READY">Mark ready</button>
+                </form>
+            {% elif order.status == 'READY' %}
+                <form method="post" action="{% url 'update_order_status' order.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" name="status" value="COMPLETED">Complete order</button>
+                </form>
+            {% endif %}
+        </article>
+    {% empty %}
+        <p>There are no orders in the queue.</p>
+    {% endfor %}
 {% endblock %}

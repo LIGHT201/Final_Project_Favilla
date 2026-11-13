@@ -22,4 +22,4 @@ class MenuItemAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order)
-admin.site.register(OrderItem)
+admin.site.register(OrderItem) 

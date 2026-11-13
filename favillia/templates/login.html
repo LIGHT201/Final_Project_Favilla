@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign in | Favilla{% endblock %}
+
+{% block content %}
+    <h1>Sign in</h1>
+    <form method="post" class="form-card card">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        <button type="submit">Sign in</button>
+    </form>
+    <p>New to Favilla? <a href="{% url 'register' %}{% if next %}?next={{ next|urlencode }}{% endif %}">Create an account</a>.</p>
+{% endblock %}

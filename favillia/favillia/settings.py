@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+from decimal import Decimal
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -117,6 +118,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+SALES_TAX_RATE = Decimal("0.02")
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "menu"
+LOGOUT_REDIRECT_URL = "menu"
 
 
 # Email
