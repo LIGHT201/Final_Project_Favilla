@@ -16,7 +16,7 @@ body {
     line-height: 1.6;
 }
 
-description {
+.description {
     color: var(--text-main);
     font-size: 1.1rem;
     margin-bottom: 1rem;
@@ -28,13 +28,17 @@ nav {
     padding: 1rem 2rem;
     border-bottom: 1px solid var(--border-color);
     display: flex;
-    gap: 1.5rem;
+    justify-content: center;
+    gap: 2.5rem;
 }
 
 nav a {
     color: var(--accent);
     text-decoration: none;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.85rem;
 }
 
 nav a:hover {
@@ -50,4 +54,28 @@ main {
 
 h1, h2 {
     color: #ffffff;
+}
+
+.hero {
+    min-height: 50vh;
+    background: url("../images/hero.jpg") center / cover no-repeat;
+}
+
+.feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 3rem 0;
+}
+
+.feature img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+@media (max-width: 700px) {
+    .feature {
+        grid-template-columns: 1fr;
+    }
 }

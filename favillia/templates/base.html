@@ -13,6 +13,7 @@
         <a href="{% url 'cart' %}">Cart</a>
         <a href="{% url 'staff_queue' %}">Staff Queue</a>
     </nav>
+    {% block hero %}{% endblock %}
     <main>
         {% block content %}{% endblock %}
     </main>
