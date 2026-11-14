@@ -79,6 +79,9 @@ def _cart_lines(request):
     return lines
 
 
+def home_view(request):
+    return render(request, 'home.html')
+
 def menu_view(request):
     menu_items = MenuItem.objects.filter(is_available=True).order_by("name")
     return render(request, 'menu.html', {'menu_items': menu_items})

@@ -9,6 +9,7 @@
 </head>
 <body>
     <nav aria-label="Main navigation">
+        <a href="{% url 'menu' %}">Order Now</a>
         <a href="{% url 'menu' %}">Menu</a>
         <a href="{% url 'cart' %}">Cart</a>
         {% if user.is_authenticated %}
